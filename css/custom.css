@@ -1,29 +1,32 @@
 /* 打字机效果 */
-#home-info h1 {
+#home-info .wrap h1 {
     overflow: hidden;
     border-right: 2px solid #fff;
     white-space: nowrap;
     margin: 0 auto;
     letter-spacing: .15em;
     animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    width: 0;
 }
 
-#home-info h3 {
+#home-info .wrap h3 {
     overflow: hidden;
     border-right: 2px solid #fff;
     white-space: nowrap;
     margin: 0 auto;
     letter-spacing: .15em;
     animation: typing 3.5s steps(40, end) 0.5s, blink-caret 0.75s step-end infinite 0.5s;
+    width: 0;
 }
 
-#home-info h5 {
+#home-info .wrap h5 {
     overflow: hidden;
     border-right: 2px solid #fff;
     white-space: nowrap;
     margin: 0 auto;
     letter-spacing: .15em;
     animation: typing 3.5s steps(40, end) 1s, blink-caret 0.75s step-end infinite 1s;
+    width: 0;
 }
 
 /* 打字机动画 */
