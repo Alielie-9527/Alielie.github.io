@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>about | 少年春风踏九洲，意气何曾羡王侯！</title>
+    <title>PEFT详解 | 少年春风踏九洲，意气何曾羡王侯！</title>
     <meta name="author" content="Alielie" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -160,7 +160,7 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>about</h1>
+        <h1>PEFT详解</h1>
     </div>
     <div class="info">
         <span class="date">
@@ -170,22 +170,123 @@
             2025/12/28
         </span>
         
+        <span class="category">
+            <a href="/categories/LLM%E5%AD%A6%E4%B9%A0/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                LLM学习
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/PEFT/" style="color: #00bcd4">
+                    PEFT
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83/" style="color: #03a9f4">
+                    大模型微调
+                </a>
+            </span>
+            
+        </span>
         
     </div>
     
     <div class="content" v-pre>
-        <h1 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h1><h2 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h2><p>一个普普通通的研究生，正在努力学习和探索技术的世界。热爱编程、开源和分享知识。</p>
-<h2 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h2><ul>
-<li>邮箱: <a href="mailto:&#49;&#x32;&#52;&#55;&#50;&#x39;&#54;&#x30;&#x32;&#x30;&#64;&#113;&#x71;&#x2e;&#99;&#x6f;&#109;">1247296020@qq.com</a></li>
-<li>GitHub: <a target="_blank" rel="noopener" href="https://github.com/Alielie-9527">您的GitHub用户名</a></li>
+        <h1 id="PEFT篇"><a href="#PEFT篇" class="headerlink" title="PEFT篇"></a>PEFT篇</h1><p><code>注释：PEFT并不是某种具体的微调方法，而是一个技术集合</code></p>
+<h4 id="1-什么是PEFT"><a href="#1-什么是PEFT" class="headerlink" title="1.什么是PEFT"></a>1.什么是PEFT</h4><p>PEFT（Parameter-Efficient Fine-Tuning)即参数高效微调，其核心思想：<strong>不需要重新训练整个大模型，而是只训练其中很小的一部分参数，同时冻结绝大部分原有的参数</strong></p>
+<p>包含如下方法：</p>
+<ol>
+<li>LoRA目前流行</li>
+<li>QLoRA，模型先压缩，再训练</li>
+<li>P-Tuning&#x2F;Prompt Tuning:让模型学习最佳提示词</li>
+<li>Prefix Tuning（前缀微调）transformer的每一层前面加入一些可训练的向量。</li>
+</ol>
+<p>优点：</p>
+<ol>
+<li>所需训练参数小</li>
+<li>可以保存不同的<strong>插件</strong>，部署时融合即可，那么避免相同大模型存储多个副本。</li>
+</ol>
+<h4 id="2-前缀微调：通过连续前缀进行调节"><a href="#2-前缀微调：通过连续前缀进行调节" class="headerlink" title="2.前缀微调：通过连续前缀进行调节"></a>2.前缀微调：通过连续前缀进行调节</h4><p>​	将前缀（其实模拟前面有输入），加到注意力机制的K和V中，模型参数保持不变。</p>
+<p>首先看一下注意力机制：<br>$$<br>\text{Attention}(Q, K, V) &#x3D; \text{softmax}\left( \frac{Q K^T}{\sqrt{d_k}} \right) V<br>$$<br>线性投影定义：<br>$$<br>Q &#x3D; h W_Q, \quad K &#x3D; h W_K, \quad V &#x3D; h W_V<br>$$<br>通过拼接来修改：<br>$$<br>K’ &#x3D; [P_K; K] &#x3D; [P_K; h W_K]\<br>V’ &#x3D; [P_V; V] &#x3D; [P_V; h W_V]<br>$$<br>修改后的注意力机制：<br>$$<br>\text{Attention}(Q, K’, V’) &#x3D; \text{softmax}\left( \frac{Q (K’)^T}{\sqrt{d_k}} \right) V’<br>$$</p>
+<h4 id="3-提示词微调"><a href="#3-提示词微调" class="headerlink" title="3.提示词微调"></a>3.提示词微调</h4><p>（1）<strong>方法的公式化表达</strong></p>
+<ul>
+<li><strong>输入序列</strong>：$X &#x3D; {x_1, x_2, \dots, x_n}$</li>
+<li><strong>Embedding 矩阵</strong>：$E \in \mathbb{R}^{|V| \times d}$ （词表大小 $\times$ 维度）</li>
 </ul>
-<h2 id="其他信息"><a href="#其他信息" class="headerlink" title="其他信息"></a>其他信息</h2><ul>
-<li>项目经验：暂无</li>
-<li>技能专长：Python、C、大模型训练微调等技术</li>
-<li>教育背景：本科就读于武汉大学国家网络安全学院，现为北京大学软件与微电子学院研究生，25考研上岸，初始总分为专业第一（数学143，专业课137）</li>
+<p><strong>正常流程</strong>：</p>
+<ol>
+<li>将 $X$ 转化为向量矩阵：$X_e &#x3D; \text{Embed}(X)$</li>
+<li>输入模型：$Output &#x3D; \text{LLM}(X_e)$</li>
+</ol>
+<p><strong>Prompt Tuning 流程</strong>：</p>
+<ol>
+<li><strong>定义 Soft Prompt</strong>：初始化一个可训练的矩阵 $P$，形状为 $[L, d]$。<ul>
+<li>$L$：提示词长度（例如 20 个 token）。</li>
+<li>$d$：模型的隐藏层维度（例如 4096）。</li>
 </ul>
-<p>欢迎访问我的博客，分享技术心得与生活感悟！</p>
-
+</li>
+<li><strong>拼接（Concatenate）</strong>：将 $P$ 拼在 $X_e$ 前面。<br>$$ Input &#x3D; [P; X_e] $$<br>现在的输入矩阵形状变成了 $(L + n) \times d$。</li>
+<li><strong>输入模型</strong>：$Output &#x3D; \text{LLM}([P; X_e])$</li>
+</ol>
+<p>（2）<strong>初始化策略：</strong></p>
+<ol>
+<li>随机初始化，使用小的随机值初始化。简单，但需要仔细调整学习率</li>
+<li>词汇初始化，用模型词汇中与任务相关的词汇的<strong>平均嵌入来初始化</strong>，比如摘要的表达：summarize，Abstract。</li>
+</ol>
+<p>（3）<strong>方法评估：</strong></p>
+<p>该方法对小模型效果差，大模型表现可以但是赶不上LoRA。并存在如下问题：</p>
+<ol>
+<li><strong>收敛慢、不稳定</strong>：直接随机初始化一组向量（Soft Prompt）去训练，很容易陷入局部最优，或者训练很久都不动。</li>
+<li><strong>独立性问题</strong>：Prompt Tuning 把每个虚拟 Token 当作独立的参数去学。但实际上，自然语言的词与词之间是有关联的（比如“New”后面接“York”概率大）。把虚拟 Token 视为完全独立的参数，忽略了它们之间的<strong>序列依赖性</strong>。</li>
+</ol>
+<h4 id="4-P-Tuning"><a href="#4-P-Tuning" class="headerlink" title="4.P-Tuning"></a>4.P-Tuning</h4><p>（1）<strong>p-Tuning-v1:</strong></p>
+<p>​	在提示词微调上做优化，在提示词微调中训练出来的提示词token之间没有关联性，于是在v1版，引入了Prompt Encoder：<strong>不直接去优化提示词向量，而是去优化一个能产生这些向量的神经网络。</strong></p>
+<p><em>架构流程：</em></p>
+<ol>
+<li><p>输入层构建索引序列，非常简单的<code>[0, 1, 2, ..., L-1]</code></p>
+</li>
+<li><p>Prompt Encoder(提示编码器)：</p>
+<p>两部分组成（<strong>这两部分的参数都需要训练</strong>）：</p>
+<ul>
+<li>Embedding层：索引变成向量</li>
+<li>LSTM或者MLP，直白来说作用就是让上一步向量产生关联。</li>
+</ul>
+</li>
+<li><p>拼接原始输入的Embedding，输入大模型。</p>
+</li>
+<li><p>反向传播</p>
+</li>
+</ol>
+<p><em>推理阶段：</em></p>
+<p>​	训练完成后，我们只需要<strong>运行一次Prompt Encoder</strong>，然后保存生成的向量在后续推理过程中拼接即可。</p>
+<script src="https://giscus.app/client.js"
+        data-repo="Alielie-9527/Alielie.github.io"
+        data-repo-id="R_kgDOQvfoCQ"
+        data-category="General"
+        data-category-id="DIC_kwDOQvfoCc4C0SEV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
     </div>
     
     
