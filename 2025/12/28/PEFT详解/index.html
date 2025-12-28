@@ -188,14 +188,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/PEFT/" style="color: #03a9f4">
+                <a href="/tags/PEFT/" style="color: #ff7d73">
                     PEFT
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83/" style="color: #ff7d73">
+                <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83/" style="color: #ffa2c4">
                     大模型微调
                 </a>
             </span>
@@ -219,8 +219,6 @@
 <li>所需训练参数小</li>
 <li>可以保存不同的<strong>插件</strong>，部署时融合即可，那么避免相同大模型存储多个副本。</li>
 </ol>
-<span id="more"></span>
-
 <h4 id="2-前缀微调：通过连续前缀进行调节"><a href="#2-前缀微调：通过连续前缀进行调节" class="headerlink" title="2.前缀微调：通过连续前缀进行调节"></a>2.前缀微调：通过连续前缀进行调节</h4><p>​	将前缀（其实模拟前面有输入），加到注意力机制的K和V中，模型参数保持不变。</p>
 <p>首先看一下注意力机制：<br>$$<br>\operatorname{Attention}(Q, K, V) &#x3D; \operatorname{softmax}\left( \frac{Q K^T}{\sqrt{d_k}} \right) V<br>$$<br>线性投影定义：<br>$$<br>Q &#x3D; h W_Q, \quad K &#x3D; h W_K, \quad V &#x3D; h W_V<br>$$<br>通过拼接来修改：<br>$$<br>K^{\prime} &#x3D; [P_K; K] &#x3D; [P_K; h W_K]<br>$$<br>$$<br>V^{\prime} &#x3D; [P_V; V] &#x3D; [P_V; h W_V]<br>$$<br>修改后的注意力机制：<br>$$<br>\operatorname{Attention}(Q, K^{\prime}, V^{\prime}) &#x3D; \operatorname{softmax}\left( \frac{Q (K^{\prime})^T}{\sqrt{d_k}} \right) V^{\prime}<br>$$</p>
 <h4 id="3-提示词微调"><a href="#3-提示词微调" class="headerlink" title="3.提示词微调"></a>3.提示词微调</h4><p>（1）<strong>方法的公式化表达</strong></p>
