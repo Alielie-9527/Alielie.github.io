@@ -188,14 +188,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/PEFT/" style="color: #ff7d73">
+                <a href="/tags/PEFT/" style="color: #03a9f4">
                     PEFT
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83/" style="color: #00bcd4">
+                <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83/" style="color: #00a596">
                     大模型微调
                 </a>
             </span>
@@ -325,10 +325,10 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 <h2 id="5-P-Tuning-v2-深度提示词微调"><a href="#5-P-Tuning-v2-深度提示词微调" class="headerlink" title="5. P-Tuning-v2(深度提示词微调)"></a>5. P-Tuning-v2(深度提示词微调)</h2><p>​	v2版本相较于v1，在每层都添加了一个可训练前缀，意味着，没到下一层，就会替换前一层Prompt的输出。这种做法<strong>克服</strong>浅层提示词微调的局限性，即<strong>初始提示词的影响可能在更深层消散</strong>。</p>
 <p>​	做了如下改进：</p>
 <ul>
-<li><strong>移除重参数化的编码器：</strong> 之前的方法，通过MLP或者LSTM让Prompt的token与token之间产生关联，但是v2中效果不是很好，于是直接改成可训练权重矩阵。</li>
-<li>**不同任务采取不同的提示长度：**这也意味参数调整相对lora来说要麻烦（个人观点）。</li>
-<li>**引入多任务学习：**就是同一组Prompt现在多任务上训练，再来适配下游任务。多任务学习不是必须的，不过在有些任务中是一个补充。引入多任务主要是多层的Prompt都是随机初始化的，会带来调优困难，这时候引入多种数据，可以缓解。</li>
-<li>**回归传统的分类标签范式，而不是映射器：**我们前面说到过，V1版本实际上就是一个填词游戏，猜&lt;MASK&gt;部分是什么词，比如情感分类，判断是正面情绪还是负面情绪，对应的表达有很多种，需要建立映射器，让模型倾向于用映射器里的词去表达好与坏，在比如有些任务无法编辑成填空的形式。于是，V2版本回归传统，采用随机初始化的分类头（Classification Head）应用于tokens之上，以增强通用性，可以适配到序列标注任务。</li>
+<li><strong>移除重参数化的编码器</strong>：V1 中用 MLP&#x2F;LSTM 让虚拟 token 间产生关联，但在 v2 中效果欠佳，v2 改为直接使用可训练的权重矩阵以提高稳定性。</li>
+<li><strong>按任务调整提示长度</strong>：不同任务可能需要不同长度的提示，这使得与 LoRA 相比，提示长度和超参调优更为敏感（个人观点）。</li>
+<li><strong>引入多任务训练</strong>：将同一组 Prompt 在多个任务上联合训练可提升泛化性，尤其能缓解多层随机初始化带来的调优困难；多任务为可选补充手段。</li>
+<li><strong>回归传统分类头（而非映射器）</strong>：我们前面说到过，V1版本实际上就是一个填词游戏，猜&lt;MASK&gt;部分是什么词，比如情感分类，判断是正面情绪还是负面情绪，对应的表达有很多种，需要建立映射器，让模型倾向于用映射器里的词去表达好与坏，在比如有些任务无法编辑成填空的形式。于是，V2版本回归传统，V2 更倾向于在 token 上使用随机初始化的分类头（Classification Head），以增强通用性并支持序列标注类任务。</li>
 </ul>
 <p><img src="/../images/P-tuning-v2.png" alt="P-tuning-v2"></p>
 <script src="https://giscus.app/client.js"
