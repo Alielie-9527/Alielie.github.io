@@ -188,14 +188,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%87%8F%E5%8C%96/" style="color: #ffa2c4">
+                <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%87%8F%E5%8C%96/" style="color: #00bcd4">
                     大模型量化
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/AWQ/" style="color: #03a9f4">
+                <a href="/tags/AWQ/" style="color: #00a596">
                     AWQ
                 </a>
             </span>
@@ -541,7 +541,7 @@ W_{scaled} =
 <li>最大值 Max &#x3D; 316。</li>
 <li>INT4 步长 &#x3D; <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>316</mn><mi mathvariant="normal">/</mi><mn>7</mn><mo>≈</mo><mn>45</mn></mrow><annotation encoding="application/x-tex">316 / 7 \approx 45</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">316/7</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">45</span></span></span></span>。</li>
 <li><strong>小权重的情况</strong>：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi mathvariant="normal">/</mi><mn>45</mn><mo>≈</mo><mn>0.04</mn><mo>→</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">2 / 45 \approx 0.04 \to 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2/45</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.04</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>。</li>
-<li>虽然小权重还是被抹零了，但相比于尝试 A 的步长 142，现在的步长 45 更加细腻了一些（如果是 INT8 就能保住了）。更重要的是，<strong>VIP 权重（第 0 列）并没有像尝试 A 那样被过度放大</strong>，这通常能获得更好的整体 Loss。</li>
+<li>虽然小权重还是被抹零了，但相比于尝试 A 的步长 142，现在的步长 45 更加细腻了一些（如果是 INT8 就能保住了，另一方面这个数据有些极端，但是也能对比出结果）。更重要的是，<strong>VIP 权重（第 0 列）并没有像尝试 A 那样被过度放大</strong>，这通常能获得更好的整体 Loss。</li>
 </ul>
 </li>
 </ul>
